@@ -9,7 +9,7 @@ namespace FilmesAPI.Controllers {
     [ApiController]
     [Route("[controller]")]
     public class FilmeController : ControllerBase {
-        
+
         private FilmeContext _context;
         private IMapper _mapper;
 
@@ -38,6 +38,17 @@ namespace FilmesAPI.Controllers {
                 return NotFound();
             }
             return Ok(filme);
+        }
+
+        [HttpPut("{id}")]
+        public IActionResult AtualizaFilme(int id, [FromBody] UpdateFilmeDto filmeDto) {
+            var filme = _context.Filmes.FirstOrDefault(filme => filme.Id == id);
+            if (filme == null) {
+                return NotFound();
+            }
+            _mapper.Map(filmeDto, filme);
+            _context.SaveChanges();
+            return NoContent();
         }
     }
 }
