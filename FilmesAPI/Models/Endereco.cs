@@ -12,5 +12,7 @@ namespace FilmesAPI.Models {
 
         [Required(ErrorMessage = "O campo de número é obrigatório!")]
         public int Numero { get; set; }
+
+        public virtual Cinema Cinema { get; set; }
     }
 }
