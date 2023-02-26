@@ -20,9 +20,9 @@ namespace FilmesAPI.Controllers {
         }
 
         /// <summary>
-        /// Adiciona um filme ao banco de dados.
+        /// Adiciona um filme a base de dados.
         /// </summary>
-        /// <param name="filmeDto">Objeto com os campos necessários para criação de um filme.</param>
+        /// <param name="filmeDto">Dados dos campos necessários para criação de um filme.</param>
         /// <returns>IActionResult</returns>
         /// <response code = "201">Caso a inserção seja feita com sucesso.</response>
         [HttpPost]
@@ -56,6 +56,7 @@ namespace FilmesAPI.Controllers {
         /// <response code = "404">Caso o filme não seja encontrado na base de dados.</response>
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public IActionResult RecuperaFilmePorId(int id) {
             var filme = _context.Filmes.FirstOrDefault(filme => filme.Id == id);
             if (filme == null) return NotFound();
@@ -75,6 +76,7 @@ namespace FilmesAPI.Controllers {
         /// <response code = "404">Caso o filme não seja encontrado na base de dados.</response>
         [HttpPut("{id}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public IActionResult AtualizaFilme(int id, [FromBody] UpdateFilmeDto filmeDto) {
             var filme = _context.Filmes.FirstOrDefault(filme => filme.Id == id);
             if (filme == null) return NotFound();
@@ -90,7 +92,7 @@ namespace FilmesAPI.Controllers {
         /// <param name="id">Identificação do filme necessária para atualiza-lo.</param>
         /// <param name="jsonPatch">Patch no body necessário para atualização do campo em especifico.</param>
         /// <returns>IActionResult</returns>
-        /// <response code = "204">Caso a alteração tenha sucesso..</response>
+        /// <response code = "204">Caso a alteração do filme tenha sucesso.</response>
         /// <response code = "404">Caso o filme não seja encontrado na base de dados.</response>
         [HttpPatch("{id}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
@@ -114,9 +116,11 @@ namespace FilmesAPI.Controllers {
         /// </summary>
         /// <param name="id">Identificação do filme necessária para atualiza-lo.</param>
         /// <returns>IActionResult</returns>
+        /// <response code = "204">Caso a deleção do filme tenha sucesso.</response>
         /// <response code = "404">Caso o filme não seja encontrado na base de dados.</response>
         [HttpDelete("{id}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public IActionResult DeletaFilme(int id) {
             var filme = _context.Filmes.FirstOrDefault(filme => filme.Id == id);
             if (filme == null) return NotFound();
