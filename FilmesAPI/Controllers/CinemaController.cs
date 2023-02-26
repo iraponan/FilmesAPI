@@ -1,10 +1,11 @@
 ﻿using AutoMapper;
 using FilmesAPI.Data;
-using FilmesAPI.Data.Dtos;
+using FilmesAPI.Data.Dtos.Cinema;
 using FilmesAPI.Models;
 using Microsoft.AspNetCore.Mvc;
 
-namespace FilmesAPI.Controllers {
+namespace FilmesAPI.Controllers
+{
     [ApiController]
     [Route("[controller]")]
     public class CinemaController : ControllerBase {
@@ -20,9 +21,9 @@ namespace FilmesAPI.Controllers {
         /// <summary>
         /// Adiciona um cinema a base de dados.
         /// </summary>
-        /// <param name="filmeDto">Dados dos campos necessários para criação de um filme.</param>
+        /// <param name="cinemaDto">Dados dos campos necessários para criação de um filme.</param>
         /// <returns>IActionResult</returns>
-        /// <response code = "201">Caso a inserção seja feita com sucesso.</response>
+        /// <response code = "201">Caso a inserção do cinema seja feita com sucesso.</response>
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         public IActionResult AcionarCinema([FromBody] CreateCinemaDto cinemaDto) {
@@ -38,7 +39,7 @@ namespace FilmesAPI.Controllers {
         /// Retorna uma lista com todos os cinemas.
         /// </summary>
         /// <returns>IActionResult</returns>
-        /// <response code = "200">Confirmando a consulta a base de dados.</response>
+        /// <response code = "200">Confirmando a consulta dos cinemas a base de dados.</response>
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public IEnumerable<ReadCinemaDto> RecuperaCinemas() {
@@ -50,7 +51,7 @@ namespace FilmesAPI.Controllers {
         /// </summary>
         /// <param name="id">Identificação do cinema necessária para retorna-lo.</param>
         /// <returns>IActionResult</returns>
-        /// <response code = "200">Confirmando a consulta ao banco de dados.</response>
+        /// <response code = "200">Confirmando a consulta do cinema ao banco de dados.</response>
         /// <response code = "404">Caso o cinema não seja encontrado na base de dados.</response>
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]

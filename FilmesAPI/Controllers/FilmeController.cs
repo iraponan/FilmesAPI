@@ -1,11 +1,12 @@
 ﻿using AutoMapper;
 using FilmesAPI.Data;
-using FilmesAPI.Data.Dtos;
+using FilmesAPI.Data.Dtos.Filme;
 using FilmesAPI.Models;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 
-namespace FilmesAPI.Controllers {
+namespace FilmesAPI.Controllers
+{
 
     [ApiController]
     [Route("[controller]")]
@@ -24,7 +25,7 @@ namespace FilmesAPI.Controllers {
         /// </summary>
         /// <param name="filmeDto">Dados dos campos necessários para criação de um filme.</param>
         /// <returns>IActionResult</returns>
-        /// <response code = "201">Caso a inserção seja feita com sucesso.</response>
+        /// <response code = "201">Caso a inserção do filme seja feita com sucesso.</response>
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         public IActionResult AdicionaFilme([FromBody] CreateFilmeDto filmeDto) {
@@ -40,7 +41,7 @@ namespace FilmesAPI.Controllers {
         /// <param name="skip">Parâmetro para pular uma sequencia de filmes na base de dados.</param>
         /// <param name="take">Parâmetro para retornar a quantidade de filmes na base de dados.</param>
         /// <returns>IActionResult</returns>
-        /// <response code = "200">Confirmando a consulta a base de dados.</response>
+        /// <response code = "200">Confirmando a consulta dos filmes a base de dados.</response>
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public IEnumerable<ReadFilmeDto> RecuperaFilmes([FromQuery] int skip = 0, [FromQuery] int take = 50) {
@@ -52,7 +53,7 @@ namespace FilmesAPI.Controllers {
         /// </summary>
         /// <param name="id">Identificação do filme necessária para retorna-lo.</param>
         /// <returns>IActionResult</returns>
-        /// <response code = "200">Confirmando a consulta ao banco de dados.</response>
+        /// <response code = "200">Confirmando a consulta do filme ao banco de dados.</response>
         /// <response code = "404">Caso o filme não seja encontrado na base de dados.</response>
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -72,7 +73,7 @@ namespace FilmesAPI.Controllers {
         /// <param name="id">Identificação do filme necessária para atualiza-lo.</param>
         /// <param name="filmeDto">Dados do filme passados no body necessário para atualização do mesmo.</param>
         /// <returns>IActionResult</returns>
-        /// <response code = "204">Caso a alteração tenha sucesso..</response>
+        /// <response code = "204">Caso a alteração do filme tenha sucesso..</response>
         /// <response code = "404">Caso o filme não seja encontrado na base de dados.</response>
         [HttpPut("{id}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
