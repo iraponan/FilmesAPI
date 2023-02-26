@@ -28,25 +28,25 @@ namespace FilmesAPI.Controllers {
         }
 
         [HttpGet]
-        public IEnumerable<Filme> RecuperaFilmes([FromQuery] int skip = 0, [FromQuery] int take = 50) {
-            return _context.Filmes.Skip(skip).Take(take);
+        public IEnumerable<ReadFilmeDto> RecuperaFilmes([FromQuery] int skip = 0, [FromQuery] int take = 50) {
+            return _mapper.Map<List<ReadFilmeDto>>(_context.Filmes.Skip(skip).Take(take));
         }
 
         [HttpGet("{id}")]
         public IActionResult RecuperaFilmePorId(int id) {
             var filme = _context.Filmes.FirstOrDefault(filme => filme.Id == id);
-            if (filme == null) {
-                return NotFound();
-            }
-            return Ok(filme);
+            if (filme == null) return NotFound();
+
+            var filmeDto = _mapper.Map<ReadFilmeDto>(filme);
+
+            return Ok(filmeDto);
         }
 
         [HttpPut("{id}")]
         public IActionResult AtualizaFilme(int id, [FromBody] UpdateFilmeDto filmeDto) {
             var filme = _context.Filmes.FirstOrDefault(filme => filme.Id == id);
-            if (filme == null) {
-                return NotFound();
-            }
+            if (filme == null) return NotFound();
+
             _mapper.Map(filmeDto, filme);
             _context.SaveChanges();
             return NoContent();
@@ -64,6 +64,16 @@ namespace FilmesAPI.Controllers {
             if (!TryValidateModel(filmeParaAtualizar)) return ValidationProblem(ModelState);
 
             _mapper.Map(filmeParaAtualizar, filme);
+            _context.SaveChanges();
+            return NoContent();
+        }
+
+        [HttpDelete("{id}")]
+        public IActionResult DeletaFilme(int id) {
+            var filme = _context.Filmes.FirstOrDefault(filme => filme.Id == id);
+            if (filme == null) return NotFound();
+
+            _context.Remove(filme);
             _context.SaveChanges();
             return NoContent();
         }
