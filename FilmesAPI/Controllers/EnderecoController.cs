@@ -8,10 +8,10 @@ namespace FilmesAPI.Controllers {
     [ApiController]
     [Route("[controller]")]
     public class EnderecoController : ControllerBase {
-        private FilmeContext _context;
+        private dbContext _context;
         private IMapper _mapper;
 
-        public EnderecoController(FilmeContext context, IMapper mapper) {
+        public EnderecoController(dbContext context, IMapper mapper) {
             _context = context;
             _mapper = mapper;
         }
