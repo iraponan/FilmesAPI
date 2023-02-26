@@ -4,7 +4,7 @@ using FilmesAPI.Models;
 
 namespace FilmesAPI.Profiles {
     public class EnderecoProfile : Profile {
-        protected EnderecoProfile() {
+        public EnderecoProfile() {
             CreateMap<CreateEnderecoDto, Endereco>();
             CreateMap<Endereco, ReadEnderecoDto>();
             CreateMap<UpdateEnderecoDto, Endereco>();

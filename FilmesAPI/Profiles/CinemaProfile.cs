@@ -2,10 +2,9 @@
 using FilmesAPI.Data.Dtos.Cinema;
 using FilmesAPI.Models;
 
-namespace FilmesAPI.Profiles
-{
+namespace FilmesAPI.Profiles {
     public class CinemaProfile : Profile {
-        protected CinemaProfile() {
+        public CinemaProfile() {
             CreateMap<CreateCinemaDto, Cinema>();
             CreateMap<Cinema, ReadCinemaDto>();
             CreateMap<UpdateCinemaDto, Cinema>();

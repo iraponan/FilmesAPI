@@ -2,8 +2,7 @@
 using FilmesAPI.Data.Dtos.Filme;
 using FilmesAPI.Models;
 
-namespace FilmesAPI.Profiles
-{
+namespace FilmesAPI.Profiles {
     public class FilmeProfile : Profile {
         public FilmeProfile() {
             CreateMap<CreateFilmeDto, Filme>();
