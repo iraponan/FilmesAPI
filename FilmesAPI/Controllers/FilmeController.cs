@@ -12,10 +12,10 @@ namespace FilmesAPI.Controllers
     [Route("[controller]")]
     public class FilmeController : ControllerBase {
 
-        private dbContext _context;
+        private DbFilmeContext _context;
         private IMapper _mapper;
 
-        public FilmeController(dbContext context, IMapper mapper) {
+        public FilmeController(DbFilmeContext context, IMapper mapper) {
             _context = context;
             _mapper = mapper;
         }
@@ -49,8 +49,8 @@ namespace FilmesAPI.Controllers
             if (nomeCinema == null) {
                 return _mapper.Map<List<ReadFilmeDto>>(_context.Filmes.Skip(skip).Take(take).ToList());
             }
-            return _mapper.
-                Map<List<ReadFilmeDto>>(_context.Filmes
+            return _mapper
+                .Map<List<ReadFilmeDto>>(_context.Filmes
                                         .Skip(skip)
                                         .Take(take)
                                         .Where(filme => filme.Sessoes.Any(sessao => sessao.Cinema.Nome == nomeCinema)).ToList());

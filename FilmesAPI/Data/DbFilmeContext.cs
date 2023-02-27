@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 
 namespace FilmesAPI.Data {
-    public class dbContext : DbContext {
+    public class DbFilmeContext : DbContext {
         protected override void OnModelCreating(ModelBuilder modelBuilder) {
             modelBuilder.Entity<Sessao>()
                 .HasKey(sessao => new {
@@ -26,7 +26,7 @@ namespace FilmesAPI.Data {
                 .OnDelete(DeleteBehavior.Restrict);
         }
 
-        public dbContext(DbContextOptions<dbContext> options) : base(options) { }
+        public DbFilmeContext(DbContextOptions<DbFilmeContext> options) : base(options) { }
 
         public DbSet<Filme> Filmes { get; set; }
         

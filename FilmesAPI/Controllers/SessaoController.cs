@@ -8,10 +8,10 @@ namespace FilmesAPI.Controllers {
     [ApiController]
     [Route("[controller]")]
     public class SessaoController : ControllerBase {
-        private dbContext _context;
+        private DbFilmeContext _context;
         private IMapper _mapper;
 
-        public SessaoController(dbContext context, IMapper mapper) {
+        public SessaoController(DbFilmeContext context, IMapper mapper) {
             _context = context;
             _mapper = mapper;
         }
