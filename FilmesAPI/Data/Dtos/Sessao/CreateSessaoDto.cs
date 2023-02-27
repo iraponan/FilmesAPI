@@ -7,5 +7,6 @@ namespace FilmesAPI.Data.Dtos.Sessao {
 
         [Required]
         public int FilmeId { get; set; }
+        public int CinemaId { get; set; }
     }
 }
