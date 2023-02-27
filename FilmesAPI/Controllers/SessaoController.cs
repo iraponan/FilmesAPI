@@ -29,7 +29,8 @@ namespace FilmesAPI.Controllers {
             _context.Sessoes.Add(sessao);
             _context.SaveChanges();
             return CreatedAtAction(nameof(RecuperaSessoesPorId), new {
-                Id = sessao.Id
+                filmeId = sessao.FilmeId,
+                cinemaId = sessao.CinemaId
             }, sessao);
         }
 
@@ -47,15 +48,16 @@ namespace FilmesAPI.Controllers {
         /// <summary>
         /// Retorna um objeto sessão de acordo com o id informado.
         /// </summary>
-        /// <param name="id">Identificação da sessão necessária para retorna-lo.</param>
+        /// <param name="filmeId">Identificação do filme necessária para atualiza-lo.</param>
+        /// <param name="cinemaId">Identificação do cinema necessária para atualiza-lo.</param>
         /// <returns>IActionResult</returns>
         /// <response code = "200">Confirmando a consulta da sessão ao banco de dados.</response>
         /// <response code = "404">Caso a sessão não seja encontrado na base de dados.</response>
-        [HttpGet("{id}")]
+        [HttpGet("{filmeId}/{cinemaId}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public IActionResult RecuperaSessoesPorId(int id) {
-            Sessao sessao = _context.Sessoes.FirstOrDefault(sessao => sessao.Id == id);
+        public IActionResult RecuperaSessoesPorId(int filmeId, int cinemaId) {
+            Sessao sessao = _context.Sessoes.FirstOrDefault(sessao => sessao.FilmeId == filmeId && sessao.CinemaId == cinemaId);
             if (sessao != null) { 
                 ReadSessaoDto sessaoDto = _mapper.Map<ReadSessaoDto>(sessao);
                 return Ok(sessaoDto);
@@ -66,16 +68,17 @@ namespace FilmesAPI.Controllers {
         /// <summary>
         /// Atualiza dados do objeto sessão por completo.
         /// </summary>
-        /// <param name="id">Identificação da sessão necessária para atualiza-lo.</param>
+        /// <param name="filmeId">Identificação do filme necessária para atualiza-lo.</param>
+        /// <param name="cinemaId">Identificação do cinema necessária para atualiza-lo.</param>
         /// <param name="sessaoDto">Dados da sessão passados no body necessário para atualização do mesmo.</param>
         /// <returns>IActionResult</returns>
         /// <response code = "204">Caso a alteração da sessão tenha sucesso.</response>
         /// <response code = "404">Caso a sessão não seja encontrado na base de dados.</response>
-        [HttpPut("{id}")]
+        [HttpPut("{filmeId}/{cinemaId}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public IActionResult AtualizaSessao(int id, [FromBody] UpdateSessaoDto sessaoDto) {
-            Sessao sessao = _context.Sessoes.FirstOrDefault(sessao => sessao.Id == id);
+        public IActionResult AtualizaSessao(int filmeId, int cinemaId, [FromBody] UpdateSessaoDto sessaoDto) {
+            Sessao sessao = _context.Sessoes.FirstOrDefault(sessao => sessao.FilmeId == filmeId && sessao.CinemaId == cinemaId);
             if (sessao == null) return NotFound();
 
             _mapper.Map(sessaoDto, sessao);
@@ -86,15 +89,16 @@ namespace FilmesAPI.Controllers {
         /// <summary>
         /// Deleta o objeto sessão da base de dados.
         /// </summary>
-        /// <param name="id">Identificação da sessão necessária para atualiza-lo.</param>
+        /// <param name="filmeId">Identificação do filme necessária para atualiza-lo.</param>
+        /// <param name="cinemaId">Identificação do cinema necessária para atualiza-lo.</param>
         /// <returns>IActionResult</returns>
         /// <response code = "204">Caso a deleção da sessão tenha sucesso.</response>
         /// <response code = "404">Caso a sessão não seja encontrado na base de dados.</response>
-        [HttpDelete("{id}")]
+        [HttpDelete("{filmeId}/{cinemaId}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public IActionResult DeletaSessao(int id) {
-            Sessao sessao = _context.Sessoes.FirstOrDefault(sessao => sessao.Id == id);
+        public IActionResult DeletaSessao(int filmeId, int cinemaId) {
+            Sessao sessao = _context.Sessoes.FirstOrDefault(sessao => sessao.FilmeId == filmeId && sessao.CinemaId == cinemaId);
             if (sessao == null) return NotFound();
 
             _context.Remove(sessao);
