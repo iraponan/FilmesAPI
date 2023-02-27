@@ -53,8 +53,7 @@ namespace FilmesAPI.Controllers
                 Map<List<ReadFilmeDto>>(_context.Filmes
                                         .Skip(skip)
                                         .Take(take)
-                                        .Where(filme => filme.Sessoes
-                                                                    .Any(sessao => sessao.Cinema.Nome == nomeCinema)).ToList());
+                                        .Where(filme => filme.Sessoes.Any(sessao => sessao.Cinema.Nome == nomeCinema)).ToList());
         }
 
         /// <summary>
