@@ -3,6 +3,7 @@ using FilmesAPI.Data;
 using FilmesAPI.Data.Dtos.Cinema;
 using FilmesAPI.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace FilmesAPI.Controllers {
     [ApiController]
@@ -35,14 +36,18 @@ namespace FilmesAPI.Controllers {
         }
 
         /// <summary>
-        /// Retorna uma lista com todos os cinemas.
+        /// Retorna uma lista com o cinema de um determinado endereço, caso o mesmo seja passado ou todos caso não seja passado nada.
         /// </summary>
+        /// <param name="enderecoId">Identificação do endereço para retornar o cinema.</param>
         /// <returns>IActionResult</returns>
-        /// <response code = "200">Confirmando a consulta dos cinemas a base de dados.</response>
+        /// <response code = "200">Confirmando a consulta do cinema a base de dados.</response>
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public IEnumerable<ReadCinemaDto> RecuperaCinemas() {
-            return _mapper.Map<List<ReadCinemaDto>>(_context.Cinemas.ToList());
+        public IEnumerable<ReadCinemaDto> RecuperaCinemas([FromQuery] int? enderecoId = null) {
+            if (enderecoId == null) {
+                return _mapper.Map<List<ReadCinemaDto>>(_context.Cinemas.ToList());
+            }
+            return _mapper.Map<List<ReadCinemaDto>>(_context.Cinemas.FromSqlRaw($"SELECT Id, Nome, EnderecoId FROM cinemas AS c WHERE c.EnderecoId = {enderecoId}").ToList());
         }
 
         /// <summary>
